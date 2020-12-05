@@ -9,6 +9,6 @@ echo "<br><br>";
 
 
 echo "hey there testing completed...";
-evho "ok thank you"
+echo "ok thank you Sachin"
 
 ?>
