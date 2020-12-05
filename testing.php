@@ -2,13 +2,13 @@
 print("procesing.......<br>");
 print("procesing.......<br>");
 print("procesing.......<br>");
-print(".......<br>");
-print(".......<br>");
-print(".......<br>");
+print("Procesing.......<br>");
+print("Procesing.......<br>");
+print("Procesing.......<br>");
 echo "<br><br>";
 
 
 echo "hey there testing completed...";
-echo "ok thank you Sachin"
+echo "ok thank you Sachin";
 
 ?>
