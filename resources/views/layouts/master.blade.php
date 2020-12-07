@@ -1,16 +1,17 @@
 <?php
 
-$menu = \DB::table('menu_master as mm')
-            ->join('menu_child as mc','mm.menu_id','mc.menu_id', 'left outer')
-            ->join('group_menu_items as gmi', 'gmi.menuchild_id', 'mc.menuchild_id', 'left outer')
-            ->join('user_in_group as uig', 'uig.group_id', 'gmi.group_id', 'left outer')
-            ->where('uig.user_id', Auth::user()->user_id)
-            ->where('mm.isactive', '1')
-            ->where('mc.isactive', '1')
-            ->select('mm.menu_name', 'mc.child_name')
-            ->orderBy('mm.serial_order')
-            ->orderBy('mc.serial_order')
-            ->get();
+
+// $menu = \DB::table('menu_master as mm')
+//             ->join('menu_child as mc','mm.menu_id','mc.menu_id', 'left outer')
+//             ->join('group_menu_items as gmi', 'gmi.menuchild_id', 'mc.menuchild_id', 'left outer')
+//             ->join('user_in_group as uig', 'uig.group_id', 'gmi.group_id', 'left outer')
+//             ->where('uig.user_id', Auth::user()->user_id)
+//             ->where('mm.isactive', '1')
+//             ->where('mc.isactive', '1')
+//             ->select('mm.menu_name', 'mc.child_name')
+//             ->orderBy('mm.serial_order')
+//             ->orderBy('mc.serial_order')
+//             ->get();
     
 
 ?>

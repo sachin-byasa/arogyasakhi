@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+$CommonUtils = new \App\Library\CommonUtils();
 
-$CommonUtils = \App\Library\CommonUtils::class;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,116 +14,73 @@ $CommonUtils = \App\Library\CommonUtils::class;
 |
 */
 
-Route::get('/test', 'TestController@index');
-
 Route::get('/', function () {
-
-    // foreach (DB::table('menu_child')->get() as $menumaster) {
-    //             $slug = Str::of($menumaster->child_name)->slug('-');
-    //             // Route::resource($slug, $slug->camel()->ucfirst());
-
-    //             print($slug.'     ---------------       '. $slug->singular()->camel()->ucfirst()->finish('Controller'));
-    //             echo "<br>";
-    //         }
-    // return \Hash::make('Sachin@282');
-
+    // return(\Hash::make('1234'));
+    // return view('welcome');
     return Redirect::to('/login');
-    // return Redirect::to('/admin/dashboard');
-    // return $string = Str::of('foo Bar bAz')->slug('_');
 });
 
 
-Auth::routes(['verify' => false]);
-
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth:arogyasakhi']], function () {
-
-    Route::get('/user-master', 'UserMasterController@index')->name('usermaster.user.list');
-    Route::post('/user-master', 'UserMasterController@index')->name('usermaster.user.list');
-    Route::get('/edit-user/{id}', 'UserMasterController@edit')->name('usermaster.user.edit');
-    Route::post('/user/update/{id}', 'UserMasterController@update')->name('usermaster.user.update');
-    Route::post('/add-user', 'UserMasterController@store')->name('usemaster.user.add');
-
-    Route::get('/group-master', 'GroupMasterController@index')->name('groupmaster.group.list');
-    Route::post('/group-master', 'GroupMasterController@index')->name('groupmaster.group.list');
-    Route::get('/edit-group/{id}', 'GroupMasterController@edit')->name('groupmaster.group.edit');
-    Route::post('/group/update/{id}', 'GroupMasterController@update')->name('groupmaster.group.update');
-    Route::post('/add-group', 'GroupMasterController@store')->name('usemaster.group.add');
-
-    Route::group(['middleware' => ['auth:arogyasakhi']], function ($CommonUtils) {
-        Route::get('/test', function ($CommonUtils) {
-
-            dd($CommonUtils->getMenuChild());
-        });
-
-        //     foreach ($CommonUtils->getMenuChild() as $menumaster) {
-
-        //         $slug = $CommonUtils->getSlug($menumaster);
-        //         // $controller = $CommonUtils->getController($slug);
-
-        //         Route::get($slug, $menumaster->controllername.'@index');
-        //         Route::post($slug, $menumaster->controllername.'@index')->name($slug.'.index');
-
-        //         Route::get($slug.'/edit', $menumaster->controllername.'@edit');
-        //         // Route::resource($slug, $controller)->middleware('user.control');
-        //     }
-
-        // });
-    });
+Auth::routes();
 
 
+Route::get('/unauthenticated', function(){
+    return view('unauthenticated');
+})->name('unauthenticated');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('admin.dashboard');
+Route::get('/test', 'testController@index')->name('test.index');
+
+Route::get('/admin/dashboard', 'HomeController@index')->name('home');
 
 
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [ 'auth:arogyasakhi', 'user.control']], function($CommonUtils){
+    
+    Route::get('/user-master', 'UserMasterController@index');
+    Route::post('/user-master', 'UserMasterController@index')->name('user-master.index');
+    Route::get('/edit-user/{id}', 'UserMasterController@edit')->name('user-master.user.edit');
+    Route::post('/user/update/{id}', 'UserMasterController@update')->name('user-master.user.update');
+    Route::post('/add-user', 'UserMasterController@store')->name('user-master.add');
+    
+    Route::get('/group-master', 'GroupMasterController@index');
+    Route::post('/group-master', 'GroupMasterController@index')->name('group-master.index');
+    Route::get('/edit-group/{id}', 'GroupMasterController@edit')->name('group-master.group.edit');
+    Route::post('/group/update/{id}', 'GroupMasterController@update')->name('group-master.group.update');
+    Route::post('/add-group', 'GroupMasterController@store')->name('group-master.group.add');
+    Route::get('/group-master/delete/{id}', 'GroupMasterController@destroy')->name('group-master.group.destroy');
+    Route::get('/group-master/activate/{id}', 'GroupMasterController@activate')->name('group-master.group.activate');
 
-
-
-
-
-    // Route::group( ['middleware' => [ 'auth:arogyasakhi']] ,function($CommonUtils) {
-    //     Route::get('/test', function($CommonUtils){
-
-    //         dd($CommonUtils->getMenuChild());
-    //     });
-
-    //     //     foreach ($CommonUtils->getMenuChild() as $menumaster) {
-
-    //     //         $slug = $CommonUtils->getSlug($menumaster);
-    //     //         // $controller = $CommonUtils->getController($slug);
-
-    //     //         Route::get($slug, $menumaster->controllername.'@index');
-    //     //         Route::post($slug, $menumaster->controllername.'@index')->name($slug.'.index');
-
-    //     //         Route::get($slug.'/edit', $menumaster->controllername.'@edit');
-    //     //         // Route::resource($slug, $controller)->middleware('user.control');
-    //     //     }
-
-    //     });
-    // });
+    // Route::get('/state', '\App\Http\Controllers\HomeController@index')->name('state.index');
+    Route::get('/district', '\App\Http\Controllers\HomeController@index')->name('district.index');
+    Route::get('/block', '\App\Http\Controllers\HomeController@index')->name('block.index');
+    Route::get('/village', '\App\Http\Controllers\HomeController@index')->name('village.index');
+    Route::get('/phc', '\App\Http\Controllers\HomeController@index')->name('phc.index');
+    Route::get('/sub-centre', '\App\Http\Controllers\HomeController@index')->name('sub-centre.index');
+    Route::get('/question-manager', '\App\Http\Controllers\HomeController@index')->name('question-manager.index');
+    Route::get('/user-management', '\App\Http\Controllers\HomeController@index')->name('user-management.index');
+    Route::get('/my-profile', '\App\Http\Controllers\HomeController@index')->name('my-profile.index');
+    
+    Route::get('/group-menu', 'GroupMenuController@index');
+    Route::post('/group-menu', 'GroupMenuController@index')->name('group-menu.index');
 
 
 
 
 
 
-    foreach (DB::table('menu_child')->get() as $menumaster) {
-        $slug = Str::of($menumaster->child_name)->slug('-');
-        $controller = $slug->singular()->camel()->ucfirst()->finish('Controller');
-        Route::get($slug, $controller . '@index')->middleware('user.control');
-        Route::post($slug, $controller . '@index')->middleware('user.control')->name($slug . '.index');
-        Route::get($slug . '/edit', $controller . '@edit')->middleware('user.control');
-        // Route::resource($slug, $controller)->middleware('user.control');
-    }
 
-    // try { 
-    //     foreach (DB::table('menu_child')->get() as $menumaster) {
-    //         $slug = Str::of($menumaster->child_name)->slug('-');
-    //         Route::resource($slug, $menumaster->controller);
-    //     }
+    // foreach (DB::table('menu_child')->get() as $menumaster) {
+    //     $slug = Str::of($menumaster->child_name)->slug('-');
+    //     $controller = $slug->singular()->camel()->ucfirst()->finish('Controller');
+    //     Route::get($slug, $controller . '@index')->middleware('user.control');
+    //     Route::post($slug, $controller . '@index')->middleware('user.control')->name($slug . '.index');
+    //     Route::get($slug . '/edit', $controller . '@edit')->middleware('user.control');
+    //     // Route::resource($slug, $controller)->middleware('user.control');
     // }
-
 
     Route::group(array('prefix' => 'states'), function()
     {
-    Route::get('/', 'StateController@index');
+    Route::get('/', 'StateController@index')->name('state.index');
     Route::get('/create', 'StateController@create');
     Route::post('/store', 'StateController@store');
     Route::get('/edit/{id}', 'StateController@edit');

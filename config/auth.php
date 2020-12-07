@@ -49,7 +49,13 @@ return [
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
-            // 'hash' => false,
+            'hash' => false,
+        ],
+        
+        'arogyasakhi-api' => [
+            'driver' => 'token',
+            'provider' => 'arogyasakhi',
+            'hash' => false,
         ],
     ],
 
@@ -73,8 +79,9 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\UserMaster::class,
         ],
+        
         'arogyasakhi' => [
             'driver' => 'eloquent',
             'model' => App\Models\UserMaster::class,

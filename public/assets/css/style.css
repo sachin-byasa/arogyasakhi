@@ -117,7 +117,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #76838f;
+  /* color: #76838f; */
   text-align: left;
   background-color: #F3F3F9; }
 
@@ -8195,7 +8195,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   top: 5rem;
   padding-top: 0;
   z-index: 99;
-  background: #fff;
+  background: rgb(236, 63, 0);
   transition: all .2s ease; }
   @media only screen and (min-width: 1200px) and (max-width: 1350px) {
     .nk-sidebar {
@@ -8223,7 +8223,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       -ms-flex-direction: column;
       flex-direction: column;
       position: relative;
-      color: #464a53; }
+      color: #ffffff; }
       .nk-sidebar .metismenu > li > a {
         transition: none; }
       .nk-sidebar .metismenu > li:hover i, .nk-sidebar .metismenu > li:focus i, .nk-sidebar .metismenu > li.active i {
@@ -8243,14 +8243,14 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         display: inline-block;
         vertical-align: middle;
         padding: 0 0.4375rem 0 0;
-        color: #464a53; }
+        color: #ffffff; }
     .nk-sidebar .metismenu a {
       position: relative;
       display: block;
       padding: 0.8125rem 1.25rem;
       outline-width: 0;
       transition: all .3s ease-out;
-      color: #464a53; }
+      color: #ffffff; }
     .nk-sidebar .metismenu ul a {
       padding: 0.625rem 0.9375rem 0.625rem 2.8125rem; }
     .nk-sidebar .metismenu ul ul a {
@@ -14171,7 +14171,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   color: #fff; }
 
 [data-sibebarbg="color_1"] .nk-sidebar .metismenu {
-  background-color: #fff; }
+  /* background-color: orangered; */
+  background-color: orangered;
+ }
   [data-sibebarbg="color_1"] .nk-sidebar .metismenu > li {
     color: #27394F; }
     [data-sibebarbg="color_1"] .nk-sidebar .metismenu > li ul a {

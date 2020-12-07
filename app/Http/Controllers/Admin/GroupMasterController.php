@@ -8,6 +8,12 @@ use App\Models\GroupMaster;
 
 class GroupMasterController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('user.control');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +58,7 @@ class GroupMasterController extends Controller
         $group = GroupMaster::where('group_id', $id)->leftJoin('application_master as am', 'group_master.application_id', 'am.application_id')->first();
         // return $group->toArray();
         $applications = \DB::table('application_master')->get();
-        return view('groupmaster-edit', ['group' => $group,  'applications' => $applications]);
+        return view('groupmaster.edit', ['group' => $group,  'applications' => $applications]);
     }
 
 
@@ -87,6 +93,27 @@ class GroupMasterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = GroupMaster::find($id)->update([
+            'isactive' => 0
+        ]);
+        if($response){
+            return back()->with(['message' => 'group disabled', 'type' => 'success']);
+        }
+        else{
+            return back()->with(['message' => 'something went wrong please try again later', 'type' => 'success']);
+        }
+    }
+
+    public function activate($id)
+    {
+        $response = GroupMaster::find($id)->update([
+            'isactive' => 1
+        ]);
+        if($response){
+            return back()->with(['message' => 'group enabled', 'type' => 'success']);
+        }
+        else{
+            return back()->with(['message' => 'something went wrong please try again later', 'type' => 'success']);
+        }
     }
 }

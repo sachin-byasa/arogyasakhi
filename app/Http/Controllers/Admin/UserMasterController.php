@@ -61,7 +61,7 @@ class UserMasterController extends Controller
         }
         $userTypes = UserType::where('isactive',1)->get();
         $GroupMasters = GroupMaster::where('isactive',1)->get();
-        return view('usermaster', ['usermaster' => $usermaster, 'userTypes' => $userTypes, 'GroupMasters' => $GroupMasters, 'request' => $request]);
+        return view('usermaster.index', ['usermaster' => $usermaster, 'userTypes' => $userTypes, 'GroupMasters' => $GroupMasters, 'request' => $request]);
         
     }
 
@@ -145,10 +145,11 @@ class UserMasterController extends Controller
                     ->select('um.user_id', 'um.user_name', 'um.login_id', 'um.email_id', 'um.mobile_number', 'um.isactive', 'um.user_type', 'ut.user_description', 'gm.group_name', 'uig.group_id')
                     ->where('um.user_id' , $id)
                     ->first();
+                    
         $userTypes = UserType::where('isactive',1)->get();
         $GroupMasters = GroupMaster::where('isactive',1)->get();
 
-        return view('usermaster-edit', ['user' => $user, 'page' => 'edit', 'userTypes' => $userTypes, 'GroupMasters' => $GroupMasters]);
+        return view('usermaster.edit', ['user' => $user, 'page' => 'edit', 'userTypes' => $userTypes, 'GroupMasters' => $GroupMasters]);
     }
 
     /**
