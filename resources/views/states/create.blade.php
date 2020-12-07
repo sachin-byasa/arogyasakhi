@@ -18,21 +18,29 @@
                     <div class="card-title">
                         <h4>Add State</h4>
                     </div>
-
+                    @include('layouts.alerts')
                     <div class="form-validation">
-                    <form class="form-valide" action="{{Request::root()}}/states/store" method="post">
+                        <form action="{{Request::root()}}/admin/states/store" method="post" id="stateForm">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group row">
-                                <label class="col-lg-2 col-form-label" for="state_name">State Name <span class="text-danger">*</span>
+                                <label class="col-lg-2 col-form-label" for="state_name">State Name <span
+                                        class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="state_name" name="state_name" placeholder="Enter Name of the State">
+                                    <input type="text" class="form-control" id="state_name" name="state_name"
+                                        placeholder="Enter Name of the State" required>
+                                        @if ($errors->has('state_name'))
+                                <span style="display:block" class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('state_name') }}</strong>
+                                </span>
+                                @endif
                                 </div>
+                                
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-2">
                                     <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{Request::root()}}/admin/states">  <button type="button" class="btn btn-primary">Back</button></a>
                                 </div>
                             </div>
                         </form>
@@ -46,4 +54,9 @@
 </div>
 
 
-@stop
+@endsection
+
+@section('script')
+<script src="{{asset('assets/js/jquery-validate.js')}}"></script>
+<script src="{{asset('assets/js/states.js')}}"></script>
+@endsection

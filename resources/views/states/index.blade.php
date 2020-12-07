@@ -1,7 +1,12 @@
 @extends('layouts.master')
 
+
 @section('content')
 <div class="row page-titles mx-0">
+    <div class="general-button">
+        <a href="{{Request::root()}}/admin/states/create"><button type="button" class="btn mb-1 btn-primary">  Add State </button></a>
+       <a href="{{Request::root()}}/admin/states/export""> <button type="button" class="btn mb-1 btn-primary">Export</button> </a>
+    </div>
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">State</a></li>
@@ -18,6 +23,8 @@
                     <div class="card-title">
                         <h4>All States</h4>
                     </div>
+
+                    @include('layouts.alerts')
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -44,11 +51,11 @@
 
                                     <td class="center" style="width: 120px;">
 
-                                        <a href="{{Request::root()}}/regulations/edit-question/{{$state->state_id}}">
+                                        <a href="{{Request::root()}}/admin/states/edit/{{$state->state_id}}">
                                             <i class="fa fa-pencil-square-o"
                                                 style="font-size: 18px;line-height: 1.5;"></i>
                                         </a>|
-                                        <a href="{{Request::root()}}/regulations/edit-question/{{$state->state_id}}">
+                                        <a href="#" onclick="return deleteconfirm('/admin/states/delete/{{$state->state_id}}')">
                                             <i class="fa fa-trash-o" style="font-size: 18px;line-height: 1.5;"></i>
                                         </a>
                                     </td>
@@ -58,6 +65,7 @@
 
                             </tbody>
                         </table>
+                        {!! $all_states->render() !!}
                     </div>
                 </div>
 
