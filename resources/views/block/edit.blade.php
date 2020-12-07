@@ -1,0 +1,100 @@
+@extends('layouts.master')
+
+@section('content')
+<div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Block</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Update</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Update Block</h4>
+                    </div>
+                    @include('layouts.alerts')
+                    <div class="form-validation">
+                        <form action="{{route('blocks.update',['block' => $block->block_id])}}" method="post" id="blockForm">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input name="_method" type="hidden" value="PUT">
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label" for="district_name">Block Name<span
+                                        class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="block_name" name="block_name"
+                                placeholder="Enter Name of the State" required value="{{$block->block_name}}">
+                                     @if ($errors->has('block_name'))
+                                <span style="display:block" class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('block_name') }}</strong>
+                                </span>
+                                @endif
+                                </div>
+                                
+                            </div>
+                            <div class="form-group row ">
+                                <label class="col-lg-2 col-form-label" for="state">State <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="state" name="state" aria-required="true" required>
+                                        <option value="">Please select State</option>
+                                        @foreach ($all_states as $state)
+                                        <option value="{{$state->state_id}}" 
+                                        @if ($block->state_id== $state->state_id ) selected @endif >{{$state->state_name}}</option>
+                                           
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('state'))
+                                    <span style="display:block" class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('state') }}</strong>
+                                    </span>
+                                    @endif
+                            </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="col-lg-2 col-form-label" for="state">District <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="district" name="district" aria-required="true" required>
+                                        <option value="">Please select District</option>
+                                        @foreach ($all_district as $district)
+                                        <option value="{{$district->district_id}}" 
+                                        @if ($block->district_id== $district->district_id ) selected @endif >{{$district->district_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('district'))
+                                    <span style="display:block" class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('district') }}</strong>
+                                    </span>
+                                    @endif
+                            </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{route('blocks.index')}}"><button type="button" class="btn btn-primary">Back</button></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@endsection
+
+@section('script')
+<script src="{{asset('assets/js/jquery-validate.js')}}"></script>
+<script src="{{asset('assets/js/block.js')}}"></script>
+@endsection
