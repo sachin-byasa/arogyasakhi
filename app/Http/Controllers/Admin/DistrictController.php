@@ -38,6 +38,7 @@ class DistrictController extends Controller
             $data['all_districts']= collect();
         }
 
+        // dd($data);
         return view('district.index',$data);
     }
 

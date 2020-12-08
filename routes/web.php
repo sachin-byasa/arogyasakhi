@@ -35,6 +35,8 @@ Route::get('/admin/dashboard', 'HomeController@index')->name('home');
 
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [ 'auth:arogyasakhi', 'user.control']], function($CommonUtils){
+// Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['user.control']], function($CommonUtils){
+
     
     Route::get('/user-master', 'UserMasterController@index');
     Route::post('/user-master', 'UserMasterController@index')->name('user-master.index');
@@ -51,15 +53,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [ 'au
     Route::get('/group-master/activate/{id}', 'GroupMasterController@activate')->name('group-master.group.activate');
 
     // Route::get('/state', '\App\Http\Controllers\HomeController@index')->name('state.index');
-    Route::get('/district', '\App\Http\Controllers\HomeController@index')->name('district.index');
-    Route::get('/block', '\App\Http\Controllers\HomeController@index')->name('block.index');
-    Route::get('/village', '\App\Http\Controllers\HomeController@index')->name('village.index');
+    Route::get('/district', 'DistrictController@index')->name('district.index');
+    Route::get('/block', 'BlockController@index')->name('block.index');
+    Route::get('/village', 'VillageController@index')->name('village.index');
     Route::get('/phc', '\App\Http\Controllers\HomeController@index')->name('phc.index');
     Route::get('/sub-centre', '\App\Http\Controllers\HomeController@index')->name('sub-centre.index');
-    Route::get('/question-manager', '\App\Http\Controllers\HomeController@index')->name('question-manager.index');
+    Route::get('/question-manager', 'QuestionManagerController@index')->name('question-manager.index');
     Route::get('/user-management', '\App\Http\Controllers\HomeController@index')->name('user-management.index');
     Route::get('/my-profile', '\App\Http\Controllers\HomeController@index')->name('my-profile.index');
-    
+
     Route::get('/group-menu', 'GroupMenuController@index');
     Route::post('/group-menu', 'GroupMenuController@index')->name('group-menu.index');
 

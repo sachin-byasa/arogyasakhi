@@ -31,12 +31,12 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'login' => 'required|string', 
+            'login_id' => 'required|string', 
             'password' => 'required|min:4',
         ]);
         
         if(Auth::guard('arogyasakhi')->attempt(['email_id' => $request->login, 'password' => $request->password], $request->filled('remember')) || 
-        Auth::guard('arogyasakhi')->attempt(['login_id' => $request->login, 'password' => $request->password], $request->filled('remember'))){
+        Auth::guard('arogyasakhi')->attempt(['login_id' => $request->login_id, 'password' => $request->password], $request->filled('remember'))){
             return redirect()->intended(route('admin.dashboard'));
         }
         else{

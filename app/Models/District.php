@@ -30,7 +30,7 @@ class District extends Model
     {
 
         $all_district = District::join('states', 'districts.state_id', '=', 'states.state_id')
-            ->select('districts.district_name', 'districts.isactive', 'states.state_name')
+            ->select('districts.district_id','districts.district_name', 'districts.isactive', 'states.state_name')
             ->where(function ($query) use ($district) {
                 if (!is_null($district)) {
                     $query->where('districts.district_name', 'LIKE', '%' . $district . '%');
