@@ -16,10 +16,12 @@ use Str;
 class CommonUtils extends Controller
 {
 
-    public function getSlug($menu_child_name)
+    public function getSlug($controller_name)
     {
-        return Str::of($menu_child_name)->slug('-');
+        return str_replace("-controller", '', Str::kebab($controller_name));
+        // return Str::of($menu_child_name)->slug('-');
     }
+    
 
     // public function getController($menumaster = array())
     // {

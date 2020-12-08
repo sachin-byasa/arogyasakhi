@@ -14,7 +14,7 @@
                 <select class="form-control input-default @error('group_id') is-invalid @enderror" name="group_id" required>
                 <option selected disabled value="">Group</option>
                     @forelse($groups as $group)
-                    <option @if($group->group_id == $request->group_id) selected @endif  value="{{$group->group_id}}">{{$group->group_name}}</option>
+                    <option @if($group->group_id == old('group_id')) selected @endif  value="{{$group->group_id}}">{{$group->group_name}}</option>
                     @empty
                     <option value="">no Role Available</option>
                     @endforelse
@@ -40,7 +40,8 @@
                     <div class="active-member">
                        
                     <div class="table-responsive">
-                        <form>
+                        <form method="post">
+                        @csrf
                                     <table class="table table-striped table-bordered zero-configuration">
                                         <thead>
                                             <tr>

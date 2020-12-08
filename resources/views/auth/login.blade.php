@@ -9,9 +9,12 @@
         </div> 
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-                @if($errors->any())
+               <?php
+               /* @if($errors->any())
     {{ implode('', $errors->all('<div>:message</div>')) }}
 @endif
+*/
+?>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -20,7 +23,7 @@
                             <label for="login_id" class="col-md-4 col-form-label text-md-right">Login Id</label>
 
                             <div class="col-md-6">
-                                <input id="login_id" type="login_id" class="form-control @error('login_id') is-invalid @enderror" name="login_id" value="{{ old('login_id') }}" required autocomplete="login_id" autofocus>
+                                <input id="login_id" type="text" class="form-control @error('login_id') is-invalid @enderror" name="login_id" value="{{ old('login_id') }}" required autocomplete="login_id" autofocus>
 
                                 @error('login_id')
                                     <span class="invalid-feedback" role="alert">

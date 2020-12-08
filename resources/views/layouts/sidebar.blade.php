@@ -1,15 +1,35 @@
- <?php $CommonUtils = new \App\Library\CommonUtils(); ?>
+ 
+ <?php 
+ $menu = \App\Models\MenuMaster::groupMenu();
+ $CommonUtils = new \App\Library\CommonUtils();
+?>
+
  <!--**********************************
             Sidebar start
         ***********************************-->
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                <?php $main = array(); 
-                $start = 0;
-                $end = 1;
-                ?>
-                @foreach($menu as $m)
+                @foreach($menu as $key => $value)
+                <li>
+                    <a class="has-arrow" href="javascript::void(0);" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text"> {{$key}}</span>
+                    </a>
+                    <ul aria-expanded="false">
+                    @foreach($value as $m)
+                    <li>
+                        <a class="" href="{{ route($CommonUtils->getSlug($m['controllername']).'.index') }}" aria-expanded="false">
+                            <span class="nav-text">{{$m['child_name']}}</span>
+                        </a>
+                    </li>
+                    @endforeach
+                    </ul>
+                @endforeach
+                </li>
+                </ul>
+
+                <?php
+                /*
                     @if(empty(in_array($m->menu_name, $main)))
                         <?php $start++ ?>
                         @if($start != $end)
@@ -23,12 +43,14 @@
                         </a>
                     
                     @endif
-                        <ul aria-expanded="false">
-                        <li><a href="{{ route($CommonUtils->getSlug($m->child_name).'.index') }}">{{$m->child_name}}</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-
+                    <li><a href="{{ route($CommonUtils->getSlug($m->child_name).'.index') }}">{{$m->child_name}}</a></li>
+                    <ul aria-expanded="false">
+                    <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                    </ul>
+                    
                     @endforeach
+                    */
+                    ?>
                     </li>
                     <!--<li class="mega-menu mega-menu-sm">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
