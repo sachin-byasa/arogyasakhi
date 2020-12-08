@@ -21,15 +21,27 @@ class BlockController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct(Optimus $opt)
+    public function __construct(Optimus $opt , Request $request)
     {
         $this->optimus = $opt;
+        $this->request =$request;
     }
 
     public function index()
     {
-        $data['all_blocks'] = Block::allBlocks();
-        // dd($data);
+
+        $noOfItems =$this->request->input('noOfItems');
+        $block =$this->request->input('block');
+        $district =$this->request->input('district');
+        $state =$this->request->input('state');
+
+        if((isset($block) && !is_null($block)) || (isset($district) && !is_null($district)) || (isset($state) && !is_null($state))){
+        $data['all_blocks'] = Block::allBlocks($noOfItems,$block,$district,$state);
+
+        }else{
+            $data['all_blocks']= collect();
+        }
+
         return view('block.index', $data);
     }
 
