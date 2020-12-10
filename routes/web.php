@@ -51,10 +51,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [ 'au
     Route::get('/group-master/activate/{id}', 'GroupMasterController@activate')->name('group-master.group.activate');
 
     // Route::get('/state', '\App\Http\Controllers\HomeController@index')->name('state.index');
-    Route::get('/district', '\App\Http\Controllers\HomeController@index')->name('district.index');
-    Route::get('/block', '\App\Http\Controllers\HomeController@index')->name('block.index');
+    Route::get('/district', 'DistrictController@index')->name('district.index');
+    Route::get('/block', 'BlockController@index')->name('block.index');
 
-    Route::get('/village', '\App\Http\Controllers\HomeController@index')->name('village.index');
+    Route::get('/village', 'VillageController@index')->name('village.index');
 
     Route::resource('phc', 'PhcController',[
         'only' => [ 'index', 'create', 'store', 'show', 'edit', 'update']

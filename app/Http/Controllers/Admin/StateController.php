@@ -17,9 +17,18 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['all_states'] = State::allStates();
+        $noOfItems =$request->input('noOfItems');
+        $state =$request->input('state');
+
+        // $data['all_states'] = State::allStates($noOfItems,$state);
+        if((isset($state) && !is_null($state))){
+            $data['all_states'] = State::allStates($noOfItems,$state);
+
+        }else{
+            $data['all_states']= collect();
+        }
         return view('states.index',$data);
     }
 
