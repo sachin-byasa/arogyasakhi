@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -21,13 +22,31 @@ class ResetPasswordController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('arogyasakhi');
+        return \Auth::guard('arogyasakhi');
     }
 
-
-    public function broker()
+    protected function rules()
     {
-        return Password::broker('arogyasakhi');
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:4',
+        ];
+    }
+
+    // public function broker()
+    // {
+    //     return Password::broker('arogyasakhi');
+    // }
+
+    protected function credentials(Request $request)
+    {
+        return ['email_id' => $request->email, 'password' => $request->password, 'password_confirmation' => $request->password_confirmation, 'token' => $request->token ];
+    }
+
+    protected function setUserPassword($user, $password)
+    {
+        $user->user_key = \Hash::make($password);
     }
 
     use ResetsPasswords;

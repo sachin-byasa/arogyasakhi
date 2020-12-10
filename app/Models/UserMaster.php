@@ -107,9 +107,4 @@ class UserMaster extends Authenticatable
         return $this->email_id;
     }
 
-    // public function getEmailVerifiedAtAttributes($value)
-    // {
-    //     return $this->qEmailVerifiedAt; 
-    // }
-
 }

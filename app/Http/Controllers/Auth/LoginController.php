@@ -30,18 +30,22 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'login_id' => 'required|string', 
-            'password' => 'required|min:4',
-        ]);
+        $validation = $this->validate($request, [
+                            'login_id' => 'required|string', 
+                            'password' => 'required|min:4',
+                        ]);
+
+        if(!$validation){
+            return back()->withError($validation);
+        }
         
-        if(Auth::guard('arogyasakhi')->attempt(['email_id' => $request->login, 'password' => $request->password], $request->filled('remember')) || 
+        if(Auth::guard('arogyasakhi')->attempt(['email_id' => $request->login_id, 'password' => $request->password], $request->filled('remember')) || 
         Auth::guard('arogyasakhi')->attempt(['login_id' => $request->login_id, 'password' => $request->password], $request->filled('remember'))){
             return redirect()->intended(route('admin.dashboard'));
         }
         else{
             throw ValidationException::withMessages([
-                'login' => [trans('auth.failed')],
+                'login_id' => [trans('auth.failed')],
             ]);
         }
     }

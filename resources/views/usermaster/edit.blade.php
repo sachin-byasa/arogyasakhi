@@ -7,6 +7,7 @@
 @if(!empty(session('message')))
     <div class="alert alert-{{session('type')}}  mt-4 mb-4" >{{session('message')}}</div>
   @endif
+  
 
     <div class="row">
         <div class="col-lg-12">
@@ -20,7 +21,7 @@
                     
                     <div class="col-lg-3 col-md-12 mb-2">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control input-default @error('user_name') is-invalid @enderror" id="user_name" name="user_name" value="@if(!empty(old('user_name'))) {{ old('user_name') }} @else {{$user->user_name}} @endif"  required>
+                        <input type="text" class="form-control input-default @error('user_name') is-invalid @enderror" id="user_name" name="user_name" value="@if(!empty(old('user_name'))){{old('user_name')}}@else{{$user->user_name}}@endif"  required>
 
                         @error('user_name')
                             <span class="invalid-feedback" role="alert">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="col-lg-3 col-md-12 mb-2">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control input-default @error('login_id') is-invalid @enderror" id="email_id" name="email_id" value="@if(!empty(old('email_id'))) {{ old('email_id') }} @else {{$user->email_id}} @endif" required>
+                        <input type="email" class="form-control input-default @error('email_id') is-invalid @enderror" id="email_id" name="email_id" value="@if(!empty(old('email_id'))){{old('email_id')}}@else{{$user->email_id}}@endif" required>
 
                         @error('email_id')
                             <span class="invalid-feedback" role="alert">
@@ -40,7 +41,7 @@
                     </div>
                     <div class="col-lg-3 col-md-12 mb-2">
                         <label for="name">Login Name</label>
-                        <input type="text" class="form-control input-default @error('login_id') is-invalid @enderror" id="login_id" name="login_id" value="@if(!empty(old('user_name')))  {{ old('user_name') }} @else {{$user->user_name}} @endif" >
+                        <input type="text" class="form-control input-default @error('login_id') is-invalid @enderror" id="login_id" name="login_id" value="@if(!empty(old('login_id'))){{old('login_id')}}@else{{$user->login_id}}@endif" >
 
                         @error('login_id')
                             <span class="invalid-feedback" role="alert">
@@ -50,7 +51,7 @@
                     </div>
                     <div class="col-lg-3 col-md-12 mb-2">
                         <label for="phone">Phone</label>
-                        <input type="tel" class="form-control input-default" name="mobile_number" id="mobile_number" value="@if(!empty(old('mobile_number'))) {{ old('mobile_number') }} @else {{$user->mobile_number}} @endif">
+                        <input type="text" class="form-control input-default @error('mobile_number') is-invalid @enderror" name="mobile_number" id="mobile_number" value="@if(!empty(old('mobile_number'))){{old('mobile_number')}}@else{{$user->mobile_number}}@endif">
                         
                         @error('mobile_number')
                             <span class="invalid-feedback" role="alert">
@@ -60,10 +61,10 @@
                     </div>
                     <div class="col-lg-3 col-md-12 mb-2">
                         <label for="isactive">Status</label>
-                        <select class="form-control input-default" id="isactive" name="isactive" required>
+                        <select class="form-control input-default input-default @error('user_type') is-invalid @enderror" id="isactive" name="isactive" required >
                             <option selected disabled value="">Choose...</option>
-                            <option @if(!empty(old('isactive')) && old('isactive') == 1) selected @else  @if($user->isactive == 1) selected @endif @endif value="1">Active</option>
-                            <option @if(!empty(old('isactive')) && old('isactive') == 0) selected @else  @if($user->isactive == 0) selected @endif @endif value="0">Inactive</option>
+                            <option @if(old('isactive') == null && $user->isactive == '1') if--act--   selected @else @if(old('isactive') == '1') else--act-- selected @endif @endif value="1">Active</option>
+                            <option @if(old('isactive') == null && $user->isactive == '0') if--inact--  selected @else @if(old('isactive') == '0') else--inact-- selected @endif @endif value="0">Inactive</option>
                         </select>
 
                         @error('isactive')
@@ -78,7 +79,7 @@
 
                         <option selected disabled value="">User Type</option>
                         @forelse($userTypes as $userType)
-                        <option @if($userType->user_type == $user->user_type) selected @endif  value="{{$userType->user_type}}">{{$userType->user_description}}</option>
+                        <option @if(old('user_type') == null && $user->user_type == $userType->user_type) selected @else @if(old('user_type') == $userType->user_type) selected @endif @endif  value="{{$userType->user_type}}">{{$userType->user_description}}</option>
                         @empty
                         <option value="">no Role Available</option>
                         @endforelse
@@ -96,7 +97,7 @@
 
                         <option selected disabled value="">Group</option>
                         @forelse($GroupMasters as $gm)
-                        <option @if($gm->group_id == $user->group_id) selected @endif  value="{{$gm->group_id}}">{{$gm->group_name}}</option>
+                        <option  @if(old('group_id') == null && $user->group_id == $gm->group_id) selected @else @if(old('group_id') == $gm->group_id) selected @endif @endif  value="{{$gm->group_id}}">{{$gm->group_name}}</option>
                         @empty
                         <option value="">no Role Available</option>
                         @endforelse
@@ -111,7 +112,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href=""><button type="button" class="btn btn-primary">Reset</button></a>
+                    <button type="reset" class="btn btn-primary">Reset</button>
                     <a href="{{ url('/admin/user-master') }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
                 </div>

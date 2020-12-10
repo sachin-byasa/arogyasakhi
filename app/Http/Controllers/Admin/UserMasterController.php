@@ -26,7 +26,7 @@ class UserMasterController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('user_name') && !empty($request->user_name) || $request->has('email_id') && !empty($request->email_id)  || $request->has('mobile_number') && !empty($request->mobile_number)  || $request->has('isactive') && !empty($request->isactive) ){
+        if($request->has('user_name') && !empty($request->user_name) || $request->has('email_id') && !empty($request->email_id)  || $request->has('mobile_number') && !empty($request->mobile_number)  || $request->has('isactive') && $request->isactive != null ){
             $usermaster = UserMaster::from('user_master as um')
             ->leftJoin('user_types as ut', 'ut.user_type', 'um.user_type')
             ->leftJoin('user_in_group as uig', 'um.user_id','uig.user_id')
@@ -41,8 +41,8 @@ class UserMasterController extends Controller
                 if(!empty($request->mobile_number)){
                     $query->where('um.mobile_number', 'like', '%' . $request->mobile_number . '%');
                 }
-                if(!empty($request->is_active)){
-                    $query->where('um.is_active', 'like', '%' . $request->is_active . '%');
+                if($request->isactive != null){
+                    $query->where('um.isactive', 'like', '%' . $request->isactive . '%');
                 }
             })
             ->select('um.user_id', 'um.user_name', 'um.login_id', 'um.email_id', 'um.mobile_number', 'um.isactive', 'ut.user_description', 'gm.group_name')
@@ -162,18 +162,17 @@ class UserMasterController extends Controller
     public function update(Request $request, $id)
     {
         $user = $request->all();
+        $validation = $request->validate([
+            'user_name' => ['required', 'string', 'max:255'],
+            'login_id' => ['required', 'string', 'max:50', 'unique:user_master,login_id,'.$id.',user_id'],
+            'email_id' => ['required', 'string', 'email', 'max:255', 'unique:user_master,email_id,'.$id.',user_id'],
+            'mobile_number' => ['required', 'string', 'min:10', 'max:10', 'unique:user_master,mobile_number,'.$id.',user_id'],
+            'user_type' => ['required', 'integer', 'min:1'],
+            'isactive' => ['required', 'integer'],
+            'user_group' => ['required', 'integer', 'alpha_dash'],
+        ]);
 
-        // $validation = $request->validate([
-        //     'user_name' => ['required', 'string', 'max:255'],
-        //     'login_id' => ['required', 'string', 'max:50', 'unique:user_master'],
-        //     'email_id' => ['required', 'string', 'email', 'max:255', 'unique:user_master'],
-        //     'mobile_number' => ['required', 'string', 'min:10', 'max:10', 'unique:user_master'],
-        //     'user_type' => ['required', 'integer', 'min:1'],
-        //     'isactive' => ['required', 'integer'],
-        //     'user_group' => ['required', 'integer', 'alpha_dash'],
-        // ]);
-
-        // if(!$validation){ return redirect()->back()->withInput($request->all())->withErrors($validation); }
+        if(!$validation){ return redirect()->back()->withInput($request->all())->withErrors($validation); }
 
         $response_user_master = UserMaster::find($id)->update([
             'user_name' => trim($request->user_name),

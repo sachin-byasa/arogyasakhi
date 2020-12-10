@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="recipient-name" class="col-form-label">Login Name:</label>
-                                        <input type="text" class="form-control input-default @error('login_id') is-invalid @enderror" id="user-name" value="{{ old('login_id') }}" name="login_id">
+                                        <input type="text" class="form-control input-default @error('login_id') is-invalid @enderror" id=login_id" value="{{ old('login_id') }}" name="login_id">
 
                                         @error('login_id')
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="message-text" class="col-form-label">Email :</label>
-                                        <input type="text" class="form-control input-default @error('email_id') is-invalid @enderror" id="email" value="{{ old('email_id') }}" name="email_id">
+                                        <input type="text" class="form-control input-default @error('email_id') is-invalid @enderror" id="email_id" value="{{ old('email_id') }}" name="email_id">
 
                                         @error('email_id')
                                             <span class="invalid-feedback" role="alert">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
@@ -28,6 +29,11 @@ class ForgotPasswordController extends Controller
     public function broker()
     {
         return Password::broker('arogyasakhi');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return ['email_id' => $request->email];
     }
 
     use SendsPasswordResetEmails;
