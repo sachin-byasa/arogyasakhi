@@ -25,7 +25,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group row">
-                                <label class="col-lg-2 col-form-label" for="sub_centre_name">sub_centre Name <span class="text-danger">*</span></label>
+                                <label class="col-lg-2 col-form-label" for="sub_centre_name">Sub Centre Name <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="sub_centre_name" name="sub_centre_name" value="{{$sub_centre->sub_centre_name}}"
                                             placeholder="Enter Name of the sub_centre" required>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="phc">phc <span class="text-danger">*</span></label>
+                            <label class="col-lg-2 col-form-label" for="phc">PHC <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
                                     <select class="form-control" id="phc" name="phc" aria-required="true" required>
                                         <option value="" disabled>Please select PHC</option>

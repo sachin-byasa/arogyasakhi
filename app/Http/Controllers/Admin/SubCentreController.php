@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubCentre;
+use \Session;
 
 class SubCentreController extends Controller
 {
@@ -13,10 +14,41 @@ class SubCentreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sub_centres = SubCentre::from('sub_centres as sc')->leftJoin('phc','phc.phc_id', 'sc.phc_id')->select('sub_centre_id', 'sub_centre_name', 'sc.phc_id', 'phc_name', 'sc.isactive')->simplePaginate(15);
-        return view('subcentre.index', compact('sub_centres'));
+        $sub_centres = SubCentre::from('sub_centres as sc')
+        ->leftJoin('phc','phc.phc_id', 'sc.phc_id')
+        ->where(function ($query) use ($request) {
+                if(!empty($request->sub_centre_name)){
+                    $query->where('sc.sub_centre_name', 'like', '%' . $request->sub_centre_name . '%');
+                    Session::put('sub_centre_name', $request->sub_centre_name);
+                }
+                if($request->has('sub_centre_name') && empty($request->sub_centre_name)){
+                    Session::forget('sub_centre_name');
+                }
+                if(!empty($request->phc_id)){
+                    $query->where('sc.phc_id', $request->phc_id);
+                    Session::put('phc_id', $request->phc_id);
+                }
+                if($request->has('phc_id') && empty($request->phc_id)){
+                    Session::forget('phc_id');
+                }
+                if($request->isactive != null){
+                    $query->where('sc.isactive', $request->isactive);
+                    Session::put('isactive', $request->isactive);
+                }
+                if($request->has('isactive') && $request->isactive == null){
+                    Session::forget('isactive');
+                }
+            })
+            ->select('sub_centre_id', 'sub_centre_name', 'sc.phc_id', 'phc_name', 'sc.isactive')
+            ->simplePaginate(15);
+            
+            $phcs = \DB::table('phc')->get();   
+            
+
+        // $sub_centres = SubCentre::from('sub_centres as sc')->leftJoin('phc','phc.phc_id', 'sc.phc_id')->select('sub_centre_id', 'sub_centre_name', 'sc.phc_id', 'phc_name', 'sc.isactive')->simplePaginate(15);
+        return view('subcentre.index', compact('sub_centres', 'phcs'));
     }
 
     /**
@@ -93,8 +125,9 @@ class SubCentreController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
+        
         $request->validate([
-            'sub_centre_name' => 'string|max:50|required',
+            'sub_centre_name' => 'string|max:50|required|unique:sub_centres,sub_centre_name,'.$id.',sub_centre_id',
             'phc' => 'integer|required',
             'status' => 'integer|required',
         ]);

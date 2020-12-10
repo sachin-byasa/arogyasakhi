@@ -20,6 +20,35 @@
 
                 <div class="card-body">
 
+                <form class="form-row mt-2 mb-2" method="get" action="{{ route('sub-centre.index') }}">
+                @csrf
+                <div class="col-lg-3 col-md-12 mb-2">
+                    <input class="form-control input-default" name="sub_centre_name"  value="{{Session::get('sub_centre_name')}}"  placeholder="Sub Centre Name">
+                </div>
+                <div class="col-lg-3 col-md-12 mb-2">
+                <select class="form-control input-default" name="phc_id">
+                        <option selected value="">Select Sub Centre</option>
+                @forelse($phcs as $phc)
+                        <option  @if($phc->phc_id == Session::get('phc_id')) selected @endif value="{{$phc->phc_id}}">{{$phc->phc_name}}</option>
+                @empty
+                        <option selected value="">No phcs available</option>
+                @endforelse
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-12 mb-2">
+                    <select class="form-control input-default" name="isactive">
+                        <option selected value="">Status</option>
+                        <option  @if(Session::get('isactive') == '1') selected @endif value="1">Active</option>
+                        <option  @if(Session::get('isactive') == '0') selected @endif value="0">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-12 mb-2">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search">Search</i></button>
+                </div>
+            </form>
+
+            
+
                     @include('layouts.alerts')
                     <div class="table table-striped table-bordered table-responsive">
                         <table class="table">
@@ -34,7 +63,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $cnt =1 ?>;
+                                <?php $cnt =1 ?>
                                 @foreach ($sub_centres as $sub_centre)
                                 <tr>
                                     <th>{{$cnt}}</th>

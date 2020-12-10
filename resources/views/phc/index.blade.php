@@ -22,34 +22,38 @@
                     <!-- <div class="card-title">
                         <h4>All States</h4>
                     </div> -->
-<?php
-/*
-                    <form class="form-row mt-2 mb-2" method="get" action="{{ route('phc.index') }}">
+
+                <form class="form-row mt-2 mb-2" method="get" action="{{ route('phc.index') }}">
                 @csrf
                 <div class="col-lg-3 col-md-12 mb-2">
-                    <input class="form-control input-default" name="sub_centre_name" value="{{$request->sub_centre_name}}" placeholder="Sub Centre Name">
+                    <input class="form-control input-default" name="phc_name"  value="{{Session::get('phc_name')}}"  placeholder="PHC Name">
                 </div>
                 <div class="col-lg-3 col-md-12 mb-2">
-                    <input class="form-control input-default" name="phc" value="{{$request->phc}}" placeholder="PHC">
-                </div>
-                <div class="col-lg-2 col-md-12 mb-2">
-                    <input class="form-control input-default" name="status" value="{{$request->status}}" placeholder="Status">
+                <select class="form-control input-default" name="block_id">
+                        <option selected value="">Select Block</option>
+                @forelse($blocks as $block)
+                        <option  @if($block->block_id == Session::get('block_id')) selected @endif value="{{$block->block_id}}">{{$block->block_name}}</option>
+                @empty
+                        <option selected value="">No blocks available</option>
+                @endforelse
+                    </select>
                 </div>
                 <div class="col-lg-2 col-md-12 mb-2">
                     <select class="form-control input-default" name="isactive">
                         <option selected value="">Status</option>
-                        <option @if($request->isactive == 1) selected @endif value="1">Active</option>
-                        <option  @if($request->isactive == 0) selected @endif value="0">Inactive</option>
+                        <option  @if(Session::get('isactive') == '1') selected @endif value="1">Active</option>
+                        <option  @if(Session::get('isactive') == '0') selected @endif value="0">Inactive</option>
                     </select>
+                </div>
+                <div class="col-lg-3 col-md-12 mb-2">
+                    <input class="form-control input-default" name="limit"  value="{{Session::get('limit')}}"  placeholder="Limit">
                 </div>
                 <div class="col-lg-2 col-md-12 mb-2">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search">Search</i></button>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-plus"></i> Add</button>
                 </div>
             </form>
       <hr>
-      */
-      ?>
+    
 
                     @include('layouts.alerts')
                     <div class="table table-striped table-bordered table-responsive">
@@ -70,8 +74,8 @@
                                 @foreach ($phcs as $phc)
                                 <tr>
                                     <th>{{$cnt}}</th>
-                                    <td>{{$phc->block_name}}</td>
                                     <td>{{$phc->phc_name}}</td>
+                                    <td>{{$phc->block_name}}</td>
                                     @if ($phc->isactive == 1)
                                     <td><span class="badge badge-primary px-2">Active</span></td>
                                     @else
