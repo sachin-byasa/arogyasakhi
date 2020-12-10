@@ -122,6 +122,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [ 'au
     Route::get('/export/csv', 'VillageController@export');
     });
 
+    Route::group(array('prefix' => 'question-manager'), function()
+    {
+    // Route::get('/', 'QuestionManagerController@index')->name('state.index');
+    Route::get('/create', 'QuestionManagerController@create')->name('question-manager.create');
+    Route::post('/store', 'QuestionManagerController@store')->name('question-manager.store');
+    Route::get('/edit/{id}', 'QuestionManagerController@edit')->name('question-manager.edit');
+    Route::post('/update', 'QuestionManagerController@update')->name('question-manager.update');
+    Route::get('/delete/{id}', 'QuestionManagerController@destroy')->name('question-manager.destroy');
+    // Route::get('/export', 'QuestionManagerController@export')->name('question-manager.create');
+    });
+
 
 });
 Route::get('/admin/dashboard', 'HomeController@index')->name('home');

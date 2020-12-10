@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
+use Jenssegers\Optimus\Optimus;
+use App\Models\Question;
+use App\Models\AnswerType;
+
 
 class QuestionManagerController extends Controller
 {
@@ -12,9 +17,18 @@ class QuestionManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(Optimus $opt , Request $request)
+    {
+        $this->optimus = $opt;
+        $this->request =$request;
+    }
+
     public function index()
     {
-        return view('dummy.blank');
+        $data['all_question']=Question::paginate(10);
+        // dd($data);
+        return view('question.index',$data);
     }
 
     /**
@@ -25,6 +39,10 @@ class QuestionManagerController extends Controller
     public function create()
     {
         //
+        $data['answer_type'] =AnswerType::all();
+        // dd($data);
+        return view('question.create',$data);
+
     }
 
     /**
@@ -35,7 +53,19 @@ class QuestionManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($_POST);
+        // (Condition) ? (Statement1) : (Statement2);
+        $answer_defination_array = array(
+            'required' => $this->request->input('capturePhotoRequired')
+        );
+        dd($answer_defination_array);
+        $question_array =array(
+            'question_key_word'=>$this->request->input('questionKeyWord'),
+            'answer_type' => $this->request->input('questionInEnglish'),
+            'mandatory_question' => 0,
+            'answer_definition' => $this->request->input('capturePhotoRequired'),
+        );
+        dd($question_array);
     }
 
     /**

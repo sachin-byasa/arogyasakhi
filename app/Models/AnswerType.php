@@ -8,4 +8,10 @@ class AnswerType extends Model{
     protected $table = 'answer_type';
 
     use HasApiTokens;
+
+
+    public function getAnswerTypeAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }
