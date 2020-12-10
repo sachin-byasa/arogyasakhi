@@ -13,8 +13,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Village;
 use Auth;
 use Jenssegers\Optimus\Optimus;
-use Illuminate\Support\Facades\Input;
-
 
 class VillageController extends Controller
 {
@@ -29,20 +27,10 @@ class VillageController extends Controller
         $this->optimus = $opt;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $noOfItems =$request->input('noOfItems');
-        $villageName =$request->input('villageName');
-        $block =$request->input('block');
-        $district =$request->input('district');
-        $state =$request->input('state');
-
-        if((isset($villageName) && !is_null($villageName)) ||(isset($block) && !is_null($block)) || (isset($district) && !is_null($district)) || (isset($state) && !is_null($state))){
-            $data['all_villages'] = Village::allVillages($noOfItems,$villageName,$block,$district,$state);
-
-        }else{
-            $data['all_villages']= collect();
-        }
+        $data['all_villages'] = Village::allVillages();
+        // dd($data);
         return view('village.index', $data);
     }
 

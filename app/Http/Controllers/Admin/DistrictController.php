@@ -18,27 +18,9 @@ class DistrictController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function index()
     {
-        $noOfItems =$this->request->input('noOfItems');
-
-        $district =$this->request->input('district');
-        $state =$this->request->input('state');
-        
-        if((isset($district) && !is_null($district)) || (isset($state) && !is_null($state))){
-        $data['all_districts'] = District::allDistrict($noOfItems,$district,$state);
-
-        }else{
-            $data['all_districts']= collect();
-        }
-
-        // dd($data);
+        $data['all_districts'] = District::allDistrict();
         return view('district.index',$data);
     }
 
@@ -49,7 +31,7 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        $data['all_states'] = State::all();
+        $data['all_states'] = State::allStates();
         return view('district.create',$data);
     }
 
@@ -101,7 +83,7 @@ class DistrictController extends Controller
         $district=District::find($id);
         if(isset($district) && !empty($district)){
             $data['district']=$district;
-            $data['all_states'] = State::all();
+            $data['all_states'] = State::allStates();
             // dd($data);
             return view('district.edit',$data);
         }else{

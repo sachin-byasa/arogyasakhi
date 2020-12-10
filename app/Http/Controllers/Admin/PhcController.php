@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PHC;
 
 class PhcController extends Controller
 {
@@ -14,7 +15,8 @@ class PhcController extends Controller
      */
     public function index()
     {
-        return view('dummy.blank');
+        $phcs = PHC::leftJoin('blocks','blocks.block_id', 'phc.block_id')->select('phc_id', 'phc_name', 'phc.block_id', 'block_name', 'district_id', 'phc.isactive')->simplePaginate(15);
+        return view('phc.index', compact('phcs'));
     }
 
     /**
@@ -24,7 +26,8 @@ class PhcController extends Controller
      */
     public function create()
     {
-        //
+        $blocks = \DB::table('blocks')->get();
+        return view('phc.create', compact('blocks'));
     }
 
     /**
@@ -35,7 +38,24 @@ class PhcController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'phc_name' => 'string|max:50|required',
+            'block' => 'integer|required',
+        ]);
+        $update_response = PHC::create([
+            'phc_name' => $request->phc_name,
+            'block_id' => $request->block,
+            'isactive' => $request->status,
+            'entry_by' => \Auth::user()->user_id,
+            'entry_date' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+
+        if($update_response){
+            return back()->with('success', 'PHC Created');
+        }
+        else{
+            return back()->with('error', 'something went wrong! please try again later.');
+        }
     }
 
     /**
@@ -57,7 +77,9 @@ class PhcController extends Controller
      */
     public function edit($id)
     {
-        //
+        $phc = PHC::where('phc_id', $id)->leftJoin('blocks','blocks.block_id', 'phc.block_id')->select('phc_id', 'phc_name', 'phc.block_id', 'block_name', 'district_id', 'phc.isactive')->first();
+        $blocks = \DB::table('blocks')->get();
+        return view('phc.edit', compact('phc','blocks'));
     }
 
     /**
@@ -69,7 +91,28 @@ class PhcController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'phc_name' => 'string|max:50|required',
+            'block' => 'integer|required',
+            'status' => 'integer|required',
+        ]);
+
+        $update_response = PHC::find($id)->update([
+                            'phc_name' => $request->phc_name,
+                            'block_id' => $request->block,
+                            'isactive' => $request->status,
+                            'updated_by' => \Auth::user()->user_id,
+                            'updated_date' => \Carbon\Carbon::now()->toDateTimeString(),
+                        ]);
+
+        if($update_response){
+            return back()->with('success', 'PHC updated');
+        }
+        else{
+            return back()->with('error', 'something went wrong! please try again later.');
+        }
+
     }
 
     /**
@@ -78,8 +121,35 @@ class PhcController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function disable($id)
     {
-        //
+        $disable_response = PHC::find($id)->update([
+            'isactive' => 0,
+            'updated_by' => \Auth::user()->user_id,
+            'updated_date' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+
+        if($disable_response){
+            return back()->with('success', 'PHC disabled');
+        }
+        else{
+            return back()->with('error', 'something went wrong! please try again later.');
+        }
+    }
+   
+    public function enable($id)
+    {
+        $enable_response = PHC::find($id)->update([
+            'isactive' => 1,
+            'updated_by' => \Auth::user()->user_id,
+            'updated_date' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+
+        if($enable_response){
+            return back()->with('success', 'PHC updated');
+        }
+        else{
+            return back()->with('error', 'something went wrong! please try again later.');
+        }
     }
 }

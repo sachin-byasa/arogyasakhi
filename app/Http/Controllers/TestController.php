@@ -16,17 +16,17 @@ class testController extends Controller
     {
 
       $user = \Auth::guard('arogyasakhi')->user()->with('userGroup')->first()->toArray(); 
-      dd($user);
-      $CommonUtils = new \App\Library\CommonUtils();
-        foreach (\DB::table('menu_child')->get() as $menumaster) {
-          // $slug = \Str::of($menumaster->controllername)->slug('-');
-          $slug = $CommonUtils->getSlug($menumaster->controllername);
-          // Route::resource($slug, $slug->camel()->ucfirst());
-// $slug->singular()->camel()->ucfirst()->finish('Controller')
-// $slug = str_replace("-controller", '', \Str::kebab($menumaster->controllername));
-                print($slug);
-                echo "<br>";
-            }
+      return $user;
+      // $CommonUtils = new \App\Library\CommonUtils();
+//         foreach (\DB::table('menu_child')->get() as $menumaster) {
+//           // $slug = \Str::of($menumaster->controllername)->slug('-');
+//           $slug = $CommonUtils->getSlug($menumaster->controllername);
+//           // Route::resource($slug, $slug->camel()->ucfirst());
+// // $slug->singular()->camel()->ucfirst()->finish('Controller')
+// // $slug = str_replace("-controller", '', \Str::kebab($menumaster->controllername));
+//                 print($slug);
+//                 echo "<br>";
+//             }
       // $out = snake_case( camel_case( "my-test-string" ) );
       // dd($out);
 

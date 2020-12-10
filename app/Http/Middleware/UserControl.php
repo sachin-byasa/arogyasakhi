@@ -32,10 +32,11 @@ class UserControl
             
         // $user = \Auth::guard('arogyasakhi')->user()->with('isAllowedController'); 
         $user = UserMaster::isAllowedController(); 
+        // dd($user);
         if(!$user){
-            return redirect(route('unauthenticated'));
+            // return redirect(route('unauthenticated'));
             // return 'You are not allowed to access this page.';
-            // return back()->with('error', 'you are not allowed to view page');
+            return back()->with('error', 'you are not allowed to view page');
         }
         return $next($request);
     }
