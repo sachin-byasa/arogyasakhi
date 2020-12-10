@@ -52,6 +52,7 @@ Route::group(['namespace' => 'API', 'prefix' => '{arogyasakhi_id}', 'middleware'
         'village' => 'VillageController',
         'visit_master' => 'VisitMasterController',
         'visit_question' => 'VisitQuestionController',
+        'test' => '\App\Http\Controller\Test',
     ]);
     // Route::get('menu/{type}', 'MenuController@index');
     // Route::get('listing/{slug?}', 'ListingController@index');
