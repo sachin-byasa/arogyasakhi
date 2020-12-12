@@ -21,14 +21,15 @@ class StateController extends Controller
     {
         $noOfItems =$request->input('noOfItems');
         $state =$request->input('state');
-
-        // $data['all_states'] = State::allStates($noOfItems,$state);
-        if((isset($state) && !is_null($state))){
+        $q =$request->input('q');
+        if((isset($q)&& !is_null($q) )){
             $data['all_states'] = State::allStates($noOfItems,$state);
 
         }else{
             $data['all_states']= collect();
-        }
+        }   
+        $data['states'] = State::all();
+        // dd($data);
         return view('states.index',$data);
     }
 

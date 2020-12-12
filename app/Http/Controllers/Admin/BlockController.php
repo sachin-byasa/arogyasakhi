@@ -30,6 +30,9 @@ class BlockController extends Controller
     public function index()
     {
 
+
+        // $yourdatetime =time().mt_rand(100,999);
+
         $noOfItems =$this->request->input('noOfItems');
         $block =$this->request->input('block');
         $district =$this->request->input('district');
