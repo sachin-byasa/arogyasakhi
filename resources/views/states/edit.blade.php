@@ -1,15 +1,56 @@
-@extends('layouts.master')
-
+@extends('layout.master')
+@section('title', 'States')
+@section('parentPageTitle', 'State')
+@section('BCLastTitle', 'Edit' )
 @section('content')
-<div class="row page-titles mx-0">
-    <div class="col p-md-0">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">State</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Add</a></li>
-        </ol>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update State</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="{{Request::root()}}/admin/states/update" method="post" id="stateForm">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="state_id" value="{{$state->state_id}}">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">State Name</label>
+                               
+                                <input type="text" class="form-control" id="state_name" name="state_name"
+                                    placeholder="State Name" name="state" required value="{{$state->state_name}}">
+                                <span style="display:block" class="error" role="alert">
+                                    <p>{{ $errors->first('state_name') }}</p>
+                                </span>
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{Request::root()}}/admin/states"> <button type="button"
+                                    class="btn btn-danger">Back</button></a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- /.card -->
+
+            </div>
+        </div>
     </div>
 </div>
-<div class="container-fluid">
+
+{{-- <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -53,7 +94,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 @endsection
