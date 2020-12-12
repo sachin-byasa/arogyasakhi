@@ -16,7 +16,7 @@ $CommonUtils = new \App\Library\CommonUtils();
 
 Route::get('/', function () {
     // return(\Hash::make('1234'));
-    return view('dummy');
+    // return view('dummy');
     return Redirect::to('/login');
 });
 

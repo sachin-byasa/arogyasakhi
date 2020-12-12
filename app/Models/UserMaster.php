@@ -64,7 +64,7 @@ class UserMaster extends Authenticatable
         if(isset($user['user_group'][0]['isactive']) && $user['user_group'][0]['isactive'] == 0){
             return false;
         }
-        // dd(class_basename(\Route::current()->controller));
+        
         $group = $user['user_group'][0]['group_id'];
         $menu = \DB::table('group_menu_items as gmi')
         ->join('menu_child as mc','gmi.menuchild_id','mc.menuchild_id', 'left outer')
@@ -72,7 +72,10 @@ class UserMaster extends Authenticatable
         ->where('gmi.group_id', $group)
         ->where('mc.isactive', 1)
         ->get();
-        // dd($menu); 
+        if($menu->isNotEmpty()){
+            \Session::put('active_page_controller',$menu[0]->controllername);
+            \Session::put('active_page_menu_master',$menu[0]->menu_id);
+        }
         return $menu->isNotEmpty(); 
     }
 
