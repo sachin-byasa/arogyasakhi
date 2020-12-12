@@ -8,6 +8,6 @@ $("#stateForm").validate({
 });
 
 
-$(document).ready( function () {
-    $('#mytable').DataTable();
-} );
+// $(document).ready( function () {
+    $('#myStates').DataTable();
+// } );

@@ -75,7 +75,7 @@
 
 
                     <div class="table-responsive">
-                        <table id="mytable" class="table table-bordered table-striped dataTable dtr-inline">
+                        <table id="myStates" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -101,7 +101,7 @@
                                     <td class="center" style="width: 120px;">
 
                                         <a href="{{Request::root()}}/admin/states/edit/{{$state->state_id}}">
-                                            <i class="fa fa-pencil" style="font-size: 18px;line-height: 1.5;"></i>
+                                            <i class="nav-icon fas fa-edit" style="font-size: 18px;line-height: 1.5;"></i>
                                         </a>|
                                         <a href="#"
                                             onclick="return deleteconfirm('/admin/states/delete/{{$state->state_id}}')">
